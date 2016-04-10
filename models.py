@@ -1,12 +1,12 @@
 """Models for the ``booking`` app."""
 from django.conf import settings
-from django.contrib.contenttypes import generic
+from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
 from hvad.models import TranslatableModel, TranslatedFields
-from international.models import countries
+#from international.models import countries
 
 
 class BookingStatus(TranslatableModel):
@@ -121,7 +121,7 @@ class Booking(models.Model):
     nationality = models.CharField(
         max_length=2,
         verbose_name=_('Nationality'),
-        choices=countries,
+        #choices=countries,
         blank=True,
     )
 
@@ -152,7 +152,7 @@ class Booking(models.Model):
     country = models.CharField(
         max_length=2,
         verbose_name=_('Country'),
-        choices=countries,
+        #choices=countries,
         blank=True,
     )
 
@@ -314,7 +314,7 @@ class BookingItem(models.Model):
     # GFK 'booked_item'
     content_type = models.ForeignKey(ContentType)
     object_id = models.PositiveIntegerField()
-    booked_item = generic.GenericForeignKey('content_type', 'object_id')
+    booked_item = GenericForeignKey('content_type', 'object_id')
 
     booking = models.ForeignKey(
         'booking.Booking',
